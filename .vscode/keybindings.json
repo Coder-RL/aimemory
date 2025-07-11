@@ -1,0 +1,22 @@
+[
+  {
+    "key": "ctrl+shift+m",
+    "command": "aimemory.openWebview",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+i", 
+    "command": "aimemory.insertContext",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+u",
+    "command": "aimemory.updateActiveContext", 
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+shift+p",
+    "command": "aimemory.updateProgress",
+    "when": "editorTextFocus"
+  }
+]

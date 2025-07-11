@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "projectName": "",
+  "autoUpdate": true,
+  "contextInjection": true,
+  "integrations": {
+    "cursor": {
+      "enabled": true,
+      "mcpAutoConfig": true,
+      "autoMode": true
+    },
+    "vscode": {
+      "enabled": true,
+      "contextInjection": true,
+      "aiIntegration": true
+    }
+  },
+  "files": {
+    "projectbrief.md": "Project overview and goals",
+    "productContext.md": "User stories and requirements",
+    "activeContext.md": "Current tasks and recent changes", 
+    "systemPatterns.md": "Architecture and design patterns",
+    "techContext.md": "Technologies and dependencies",
+    "progress.md": "Completed work and status"
+  }
+}

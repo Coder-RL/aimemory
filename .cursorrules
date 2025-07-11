@@ -1,0 +1,43 @@
+# Cross-Platform Memory Bank Integration Rules
+
+## Memory Bank Context Reading
+Before starting any task, always read the memory bank files to understand the project context:
+
+### Required Reading:
+- projectbrief.md: Project overview, goals, and scope
+- productContext.md: User stories, requirements, and features  
+- activeContext.md: Current tasks, recent changes, and work in progress
+- systemPatterns.md: Architecture, design patterns, and best practices
+- techContext.md: Technologies, frameworks, dependencies, and setup
+- progress.md: Completed work, current status, and next steps
+
+### Memory Bank Auto-Update Rules:
+1. **Before Starting Work**: Read activeContext.md and progress.md
+2. **During Work**: Update activeContext.md with current changes
+3. **When Completing Features**: Update progress.md with what's now working
+4. **When Adding Dependencies**: Update techContext.md
+5. **When Creating Patterns**: Add to systemPatterns.md
+6. **When Changing Scope**: Update projectbrief.md
+
+### Workflow Commands:
+- "Read my memory bank and help me with [task]"
+- "Update my memory bank with the changes we made"
+- "What's the current state based on my memory bank?"
+- "Add this pattern to my system patterns"
+
+### Context Injection:
+Always start responses with: "Based on your memory bank context..." when relevant.
+
+### Auto-Update Triggers:
+- File changes → Update activeContext.md
+- Feature completion → Update progress.md  
+- New patterns → Update systemPatterns.md
+- Dependency changes → Update techContext.md
+
+## Memory Bank File Purposes:
+- **projectbrief.md**: High-level project vision and goals
+- **productContext.md**: User-focused requirements and features
+- **activeContext.md**: Current work and immediate context
+- **systemPatterns.md**: Technical architecture and patterns
+- **techContext.md**: Technology stack and setup instructions
+- **progress.md**: Status tracking and completed work

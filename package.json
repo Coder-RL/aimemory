@@ -1,62 +1,143 @@
 {
   "name": "aimemory",
-  "displayName": "AI Memory",
+  "displayName": "Cross-Platform AI Memory Bank",
   "publisher": "CoderOne",
   "repository": {
-    "url": "https://github.com/Ipenywis/aimemory"
+    "url": "https://github.com/Coder-RL/aimemory"
   },
-  "description": "Easily manage AI context for your projects using memory bank technique",
-  "version": "0.0.7",
+  "description": "Cross-platform memory bank system for AI context management - works seamlessly with Cursor and VS Code",
+  "version": "2.0.0",
   "engines": {
-    "vscode": "^1.96.2"
+    "vscode": "^1.95.0"
   },
-  "icon": "dist/assets/icon.png",
   "categories": [
     "Other"
   ],
-  "main": "./dist/extension.js",
+  "main": "./extension-simple.js",
   "contributes": {
     "commands": [
       {
-        "command": "aimemory.startMCP",
-        "title": "AI Memory: Start MCP Server"
+        "command": "aimemory.openWebview",
+        "title": "Memory Bank: Open Dashboard"
+      },
+      {
+        "command": "aimemory.startServer",
+        "title": "Memory Bank: Start MCP Server"
       },
       {
         "command": "aimemory.stopServer",
-        "title": "AI Memory: Stop MCP Server"
+        "title": "Memory Bank: Stop MCP Server"
       },
       {
-        "command": "aimemory.openWebview",
-        "title": "AI Memory: Open Dashboard"
+        "command": "aimemory.getStatus",
+        "title": "Memory Bank: Get Server Status"
       },
       {
-        "command": "aimemory.updateMCPConfig",
-        "title": "AI Memory: Update Cursor MCP Config"
+        "command": "aimemory.export",
+        "title": "Memory Bank: Export Data"
+      },
+      {
+        "command": "aimemory.validate",
+        "title": "Memory Bank: Validate Integrity"
+      },
+      {
+        "command": "cursor.newChatWithMemory",
+        "title": "Cursor: New Chat with Memory Context"
+      },
+      {
+        "command": "aimemory.updateFromSelection",
+        "title": "Memory Bank: Update from Selection"
+      },
+      {
+        "command": "aimemory.insertContext",
+        "title": "Memory Bank: Insert Context"
+      },
+      {
+        "command": "aimemory.createSummary",
+        "title": "Memory Bank: Create Summary"
+      },
+      {
+        "command": "aimemory.updateFromFile",
+        "title": "Memory Bank: Update from Current File"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Cross-Platform Memory Bank",
+      "properties": {
+        "aimemory.serverPort": {
+          "type": "number",
+          "default": 7331,
+          "description": "Port for the MCP server"
+        },
+        "aimemory.maxFileSize": {
+          "type": "number",
+          "default": 1048576,
+          "description": "Maximum file size in bytes (default: 1MB)"
+        },
+        "aimemory.allowedExtensions": {
+          "type": "array",
+          "default": [
+            ".md",
+            ".txt",
+            ".json"
+          ],
+          "description": "Allowed file extensions for memory bank files"
+        },
+        "aimemory.allowedPaths": {
+          "type": "array",
+          "default": [
+            "memory-bank"
+          ],
+          "description": "Allowed paths for memory bank operations"
+        },
+        "aimemory.enableContentSanitization": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable content sanitization for security"
+        },
+        "aimemory.enableLogging": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable detailed logging"
+        },
+        "aimemory.enableMetrics": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable performance metrics collection"
+        }
+      }
+    }
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run package",
     "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.js --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
-    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
+    "package": "node esbuild.js --production",
+    "package-quick": "vsce package --no-dependencies",
     "package:vsce": "pnpm vsce package --no-dependencies",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
+    "test": "vscode-test",
+    "test:unit": "jest tests/unit",
+    "test:integration": "jest tests/integration",
+    "test:e2e": "jest tests/e2e",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:security": "jest tests/unit/security",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
-    "test": "vscode-test",
     "webview:dev": "cd src/webview && pnpm run dev",
     "build": "npm-run-all -s webview:build package"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "~20.17.25",
+    "@types/supertest": "^6.0.3",
     "@types/vscode": "^1.95.0",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
@@ -66,14 +147,17 @@
     "esbuild": "^0.25.0",
     "esbuild-plugin-copy": "^2.1.1",
     "eslint": "^9.21.0",
+    "jest": "^30.0.4",
     "npm-run-all": "^4.1.5",
-    "typescript": "^5.7.3"
+    "supertest": "^7.1.3",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",
     "cors": "^2.8.5",
     "express": "^4.18.3",
-    "zod": "^3.22.4"
+    "zod": "^3.25.76"
   },
   "packageManager": "pnpm@10.7.0+sha512.6b865ad4b62a1d9842b61d674a393903b871d9244954f652b8842c2b553c72176b278f64c463e52d40fff8aba385c235c8c9ecf5cc7de4fd78b8bb6d49633ab6"
 }

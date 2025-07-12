@@ -21,7 +21,24 @@ function activate(context) {
 
     // Register commands
     const openDashboardCommand = vscode.commands.registerCommand('aimemory.openWebview', () => {
-        openMemoryBankDashboard(context);
+        // Directly create and show the webview panel
+        if (webviewPanel) {
+            webviewPanel.reveal();
+            return;
+        }
+        webviewPanel = vscode.window.createWebviewPanel(
+            'memoryBankDashboard',
+            'Memory Bank Dashboard',
+            vscode.ViewColumn.One,
+            {
+                enableScripts: true,
+                retainContextWhenHidden: true
+            }
+        );
+        webviewPanel.webview.html = getWebviewContent();
+        webviewPanel.onDidDispose(() => {
+            webviewPanel = null;
+        });
     });
 
     const getStatusCommand = vscode.commands.registerCommand('aimemory.getStatus', () => {
@@ -46,6 +63,18 @@ function activate(context) {
         }
     });
 
+    const insertContextCommand = vscode.commands.registerCommand('aimemory.insertContext', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+            const memoryContext = await getMemoryBankContext();
+            const position = editor.selection.active;
+            editor.edit(editBuilder => {
+                editBuilder.insert(position, memoryContext);
+            });
+            vscode.window.showInformationMessage('Memory bank context inserted');
+        }
+    });
+
     const updateActiveContextCommand = vscode.commands.registerCommand('aimemory.updateActiveContext', async () => {
         const input = await vscode.window.showInputBox({
             prompt: 'Update active context',
@@ -66,13 +95,34 @@ function activate(context) {
         }
     });
 
-    // Add commands to subscriptions
+    const updateProgressCommand = vscode.commands.registerCommand('aimemory.updateProgress', async () => {
+        const input = await vscode.window.showInputBox({
+            prompt: 'Update progress',
+            placeHolder: 'Enter completed work...'
+        });
+        if (input) {
+            try {
+                const workspaceRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
+                const memoryBankPath = path.join(workspaceRoot, 'memory-bank');
+                const filePath = path.join(memoryBankPath, 'progress.md');
+                let content = fs.readFileSync(filePath, 'utf8');
+                content += `\n- ${input}`;
+                fs.writeFileSync(filePath, content, 'utf8');
+                vscode.window.showInformationMessage('Progress updated');
+            } catch (error) {
+                vscode.window.showErrorMessage('Failed to update progress: ' + error.message);
+            }
+        }
+    });
+
     context.subscriptions.push(
         openDashboardCommand,
         getStatusCommand,
         startServerCommand,
         stopServerCommand,
-        updateActiveContextCommand
+        insertContextCommand,
+        updateActiveContextCommand,
+        updateProgressCommand
     );
 
     // Initialize memory bank if workspace is available
@@ -408,6 +458,28 @@ async function stopMCPServer() {
         mcpServer.close();
         mcpServer = null;
         console.log('MCP server stopped');
+    }
+}
+
+/**
+ * Get memory bank context for insertion
+ */
+async function getMemoryBankContext() {
+    try {
+        const workspaceRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
+        const memoryBankPath = path.join(workspaceRoot, 'memory-bank');
+        const activeContextPath = path.join(memoryBankPath, 'activeContext.md');
+        const activeContextContent = fs.readFileSync(activeContextPath, 'utf8');
+
+        // Extract the last task from the active context file
+        const tasks = activeContextContent.split('\n').filter(line => line.startsWith('- '));
+        if (tasks.length > 0) {
+            return `\n- ${tasks[tasks.length - 1].substring(2)}`; // Return the last task
+        }
+        return '';
+    } catch (error) {
+        console.error('Failed to get memory bank context:', error);
+        return '';
     }
 }
 

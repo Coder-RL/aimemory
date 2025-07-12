@@ -13,7 +13,10 @@
   "categories": [
     "Other"
   ],
-  "main": "./extension-simple.js",
+  "activationEvents": [
+    "*"
+  ],
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -21,7 +24,7 @@
         "title": "Memory Bank: Open Dashboard"
       },
       {
-        "command": "aimemory.startServer",
+        "command": "aimemory.startMCP",
         "title": "Memory Bank: Start MCP Server"
       },
       {
@@ -33,32 +36,16 @@
         "title": "Memory Bank: Get Server Status"
       },
       {
-        "command": "aimemory.export",
-        "title": "Memory Bank: Export Data"
-      },
-      {
-        "command": "aimemory.validate",
-        "title": "Memory Bank: Validate Integrity"
-      },
-      {
-        "command": "cursor.newChatWithMemory",
-        "title": "Cursor: New Chat with Memory Context"
-      },
-      {
-        "command": "aimemory.updateFromSelection",
-        "title": "Memory Bank: Update from Selection"
-      },
-      {
         "command": "aimemory.insertContext",
         "title": "Memory Bank: Insert Context"
       },
       {
-        "command": "aimemory.createSummary",
-        "title": "Memory Bank: Create Summary"
+        "command": "aimemory.updateActiveContext",
+        "title": "Memory Bank: Update Active Context"
       },
       {
-        "command": "aimemory.updateFromFile",
-        "title": "Memory Bank: Update from Current File"
+        "command": "aimemory.updateProgress",
+        "title": "Memory Bank: Update Progress"
       }
     ],
     "configuration": {
@@ -106,7 +93,34 @@
           "description": "Enable performance metrics collection"
         }
       }
-    }
+    },
+    "keybindings": [
+      {
+        "command": "aimemory.openWebview",
+        "key": "cmd+shift+m",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "aimemory.insertContext",
+        "key": "cmd+shift+i",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "aimemory.updateActiveContext",
+        "key": "cmd+shift+u",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "aimemory.updateProgress",
+        "key": "cmd+shift+j",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "aimemory.updateActiveContext",
+        "key": "cmd+shift+k",
+        "when": "editorTextFocus"
+      }
+    ]
   },
   "scripts": {
     "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",

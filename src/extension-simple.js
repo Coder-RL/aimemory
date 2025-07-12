@@ -46,12 +46,33 @@ function activate(context) {
         }
     });
 
+    const updateActiveContextCommand = vscode.commands.registerCommand('aimemory.updateActiveContext', async () => {
+        const input = await vscode.window.showInputBox({
+            prompt: 'Update active context',
+            placeHolder: 'Enter current work status...'
+        });
+        if (input) {
+            try {
+                const workspaceRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
+                const memoryBankPath = path.join(workspaceRoot, 'memory-bank');
+                const filePath = path.join(memoryBankPath, 'activeContext.md');
+                let content = fs.readFileSync(filePath, 'utf8');
+                content += `\n- ${input}`;
+                fs.writeFileSync(filePath, content, 'utf8');
+                vscode.window.showInformationMessage('Active context updated');
+            } catch (error) {
+                vscode.window.showErrorMessage('Failed to update active context: ' + error.message);
+            }
+        }
+    });
+
     // Add commands to subscriptions
     context.subscriptions.push(
         openDashboardCommand,
         getStatusCommand,
         startServerCommand,
-        stopServerCommand
+        stopServerCommand,
+        updateActiveContextCommand
     );
 
     // Initialize memory bank if workspace is available

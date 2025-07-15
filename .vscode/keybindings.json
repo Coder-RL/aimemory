@@ -1,21 +1,21 @@
 [
   {
-    "key": "ctrl+shift+m",
+    "key": "cmd+shift+m",
     "command": "aimemory.openWebview",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+i", 
+    "key": "cmd+shift+i", 
     "command": "aimemory.insertContext",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+u",
+    "key": "cmd+shift+u",
     "command": "aimemory.updateActiveContext", 
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+p",
+    "key": "cmd+shift+j",
     "command": "aimemory.updateProgress",
     "when": "editorTextFocus"
   }

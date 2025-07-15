@@ -1,43 +1,72 @@
-# Cross-Platform Memory Bank Integration Rules
+# MEMORY BANK INTEGRATION - PRODUCTION CONFIGURATION
 
-## Memory Bank Context Reading
-Before starting any task, always read the memory bank files to understand the project context:
+## CATCH PHRASE SYSTEM - SIMPLE TRIGGERS
+When user types these EXACT catch phrases, respond with the specified action:
 
-### Required Reading:
-- projectbrief.md: Project overview, goals, and scope
-- productContext.md: User stories, requirements, and features  
-- activeContext.md: Current tasks, recent changes, and work in progress
-- systemPatterns.md: Architecture, design patterns, and best practices
-- techContext.md: Technologies, frameworks, dependencies, and setup
-- progress.md: Completed work, current status, and next steps
+### MEMORY ACTIVATION CATCH PHRASES:
+- **MEMORY_ACTIVATE** or **MEMORY_START** → Read ALL memory bank files and provide full project context
+- **MEMORY_BRIEF** or **MEMORY_QUICK** → Read activeContext.md and progress.md only
+- **MEMORY_TECH** or **MEMORY_TECHNICAL** → Read techContext.md and systemPatterns.md only
 
-### Memory Bank Auto-Update Rules:
-1. **Before Starting Work**: Read activeContext.md and progress.md
-2. **During Work**: Update activeContext.md with current changes
-3. **When Completing Features**: Update progress.md with what's now working
-4. **When Adding Dependencies**: Update techContext.md
-5. **When Creating Patterns**: Add to systemPatterns.md
-6. **When Changing Scope**: Update projectbrief.md
+### MEMORY UPDATE CATCH PHRASES:
+- **MEMORY_COMPLETED [task]** → Add completed task to progress.md and activeContext.md
+- **MEMORY_WORKING [task]** → Update current work in activeContext.md
+- **MEMORY_NOTE [note]** → Add important note to activeContext.md
 
-### Workflow Commands:
-- "Read my memory bank and help me with [task]"
-- "Update my memory bank with the changes we made"
-- "What's the current state based on my memory bank?"
-- "Add this pattern to my system patterns"
+### CATCH PHRASE RESPONSE FORMAT:
+When catch phrase detected, respond with:
+1. "🧠 MEMORY BANK ACTIVATED" header
+2. Relevant context from memory bank files
+3. "💡 Memory bank context loaded. How can I help?"
 
-### Context Injection:
-Always start responses with: "Based on your memory bank context..." when relevant.
+## Context Reading Protocol
+ALWAYS read memory bank files before responding to any request.
 
-### Auto-Update Triggers:
-- File changes → Update activeContext.md
-- Feature completion → Update progress.md  
-- New patterns → Update systemPatterns.md
-- Dependency changes → Update techContext.md
+### Memory Bank Files (read in priority order):
+1. `memory-bank/projectbrief.md` - Project overview and goals
+2. `memory-bank/activeContext.md` - Current work and immediate context  
+3. `memory-bank/progress.md` - Completed work and next steps
+4. `memory-bank/techContext.md` - Technology stack and setup
+5. `memory-bank/systemPatterns.md` - Architecture and design patterns
+6. `memory-bank/productContext.md` - User requirements and features
+
+### Response Protocol:
+1. Start responses with: "Based on your memory bank context..."
+2. Reference specific information from relevant memory bank files
+3. Ensure all suggestions align with existing patterns and tech stack
+4. Consider current progress and active work when making recommendations
+
+### Memory Bank Update Protocol:
+When work is completed or context changes significantly:
+1. Update `activeContext.md` with current work status
+2. Update `progress.md` with completed items and new metrics
+3. Add new patterns to `systemPatterns.md` when introducing new approaches
+4. Update `techContext.md` when dependencies or setup changes
+
+### Context Injection Commands:
+Use these phrases to trigger memory bank reading:
+- "Read my memory bank and help me with [specific task]"
+- "Based on my project context, [question/request]"
+- "Update my memory bank with [completed work/changes]"
+- "What should I work on next based on my current progress?"
+
+### Quality Assurance:
+- Always validate suggestions against existing system patterns
+- Ensure consistency with established coding standards
+- Consider performance and security implications
+- Maintain alignment with project goals and user requirements
 
 ## Memory Bank File Purposes:
-- **projectbrief.md**: High-level project vision and goals
-- **productContext.md**: User-focused requirements and features
-- **activeContext.md**: Current work and immediate context
-- **systemPatterns.md**: Technical architecture and patterns
-- **techContext.md**: Technology stack and setup instructions
-- **progress.md**: Status tracking and completed work
+- **projectbrief.md**: High-level vision, goals, scope, and success criteria
+- **activeContext.md**: Current tasks, recent changes, immediate focus areas
+- **progress.md**: Completed work, metrics, milestones, and velocity tracking
+- **techContext.md**: Technology stack, dependencies, setup instructions
+- **systemPatterns.md**: Architecture, design patterns, coding standards
+- **productContext.md**: User stories, requirements, personas, feedback
+
+## Integration Workflow:
+1. Read memory bank context before every response
+2. Provide context-aware, project-specific guidance
+3. Suggest memory bank updates when appropriate
+4. Maintain consistency with established project patterns
+5. Track and reference previous decisions and implementations

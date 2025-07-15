@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Memory Bank Schema",
+  "type": "object",
+  "properties": {
+    "version": {"type": "string"},
+    "projectName": {"type": "string"},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "lastUpdated": {"type": "string", "format": "date-time"},
+    "contributors": {"type": "array", "items": {"type": "string"}},
+    "settings": {
+      "type": "object",
+      "properties": {
+        "autoBackup": {"type": "boolean"},
+        "validateOnUpdate": {"type": "boolean"},
+        "enableAnalytics": {"type": "boolean"},
+        "contextMaxLength": {"type": "integer", "minimum": 1000}
+      }
+    }
+  },
+  "required": ["version", "projectName", "createdAt", "lastUpdated"]
+}

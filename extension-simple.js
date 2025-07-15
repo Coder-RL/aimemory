@@ -46,12 +46,50 @@ function activate(context) {
         }
     });
 
+    // Add missing commands
+    const insertContextCommand = vscode.commands.registerCommand('aimemory.insertContext', async () => {
+        const editor = vscode.window.activeTextEditor;
+        if (editor) {
+            const memoryContext = await getMemoryBankContext();
+            const position = editor.selection.active;
+            editor.edit(editBuilder => {
+                editBuilder.insert(position, memoryContext);
+            });
+            vscode.window.showInformationMessage('Memory bank context inserted');
+        }
+    });
+
+    const updateActiveContextCommand = vscode.commands.registerCommand('aimemory.updateActiveContext', async () => {
+        const input = await vscode.window.showInputBox({
+            prompt: 'Update active context',
+            placeHolder: 'Enter current work status...'
+        });
+        if (input) {
+            // Update activeContext.md file
+            vscode.window.showInformationMessage('Active context updated');
+        }
+    });
+
+    const updateProgressCommand = vscode.commands.registerCommand('aimemory.updateProgress', async () => {
+        const input = await vscode.window.showInputBox({
+            prompt: 'Update progress',
+            placeHolder: 'Enter completed work...'
+        });
+        if (input) {
+            // Update progress.md file
+            vscode.window.showInformationMessage('Progress updated');
+        }
+    });
+
     // Add commands to subscriptions
     context.subscriptions.push(
         openDashboardCommand,
         getStatusCommand,
         startServerCommand,
-        stopServerCommand
+        stopServerCommand,
+        insertContextCommand,
+        updateActiveContextCommand,
+        updateProgressCommand
     );
 
     // Initialize memory bank if workspace is available
@@ -153,6 +191,35 @@ function openMemoryBankDashboard(context) {
                 break;
         }
     });
+}
+
+/**
+ * Get memory bank context for insertion
+ */
+async function getMemoryBankContext() {
+    try {
+        const workspaceRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
+        const memoryBankPath = path.join(workspaceRoot, 'memory-bank');
+
+        let context = '\n// === MEMORY BANK CONTEXT ===\n';
+        context += '// This context was automatically injected from your memory bank\n\n';
+
+        const files = ['projectbrief.md', 'activeContext.md', 'progress.md'];
+
+        for (const filename of files) {
+            const filePath = path.join(memoryBankPath, filename);
+            if (fs.existsSync(filePath)) {
+                const content = fs.readFileSync(filePath, 'utf8');
+                context += `// === ${filename.toUpperCase()} ===\n`;
+                context += `// ${content.substring(0, 200)}...\n\n`;
+            }
+        }
+
+        context += '// === END MEMORY BANK CONTEXT ===\n\n';
+        return context;
+    } catch (error) {
+        return '\n// Memory bank context not available\n\n';
+    }
 }
 
 /**

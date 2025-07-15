@@ -1,0 +1,82 @@
+{
+  "Memory Bank Activate": {
+    "prefix": "MEMORY_ACTIVATE",
+    "body": [
+      "MEMORY_ACTIVATE",
+      "",
+      "${1:Your question here after memory bank loads}"
+    ],
+    "description": "🧠 Activate full memory bank context"
+  },
+  
+  "Memory Bank Brief": {
+    "prefix": "MEMORY_BRIEF", 
+    "body": [
+      "MEMORY_BRIEF",
+      "",
+      "${1:Your question here after brief context loads}"
+    ],
+    "description": "🧠 Activate brief memory bank context"
+  },
+  
+  "Memory Bank Technical": {
+    "prefix": "MEMORY_TECH",
+    "body": [
+      "MEMORY_TECH", 
+      "",
+      "${1:Your technical question here}"
+    ],
+    "description": "🧠 Activate technical memory bank context"
+  },
+  
+  "Memory Bank Completed": {
+    "prefix": "MEMORY_COMPLETED",
+    "body": [
+      "MEMORY_COMPLETED ${1:describe what you just completed}",
+      "",
+      "${2:Optional follow-up question}"
+    ],
+    "description": "✅ Mark task as completed in memory bank"
+  },
+  
+  "Memory Bank Working": {
+    "prefix": "MEMORY_WORKING",
+    "body": [
+      "MEMORY_WORKING ${1:describe what you're working on now}",
+      "",
+      "${2:Optional question about current work}"
+    ],
+    "description": "🔄 Update current work in memory bank"
+  },
+  
+  "Memory Bank Note": {
+    "prefix": "MEMORY_NOTE",
+    "body": [
+      "MEMORY_NOTE ${1:important note or decision}",
+      "",
+      "${2:Optional follow-up question}"
+    ],
+    "description": "📝 Add important note to memory bank"
+  },
+
+  "Memory Quick Start": {
+    "prefix": "mb",
+    "body": [
+      "MEMORY_ACTIVATE",
+      "",
+      "${1:What should I work on next?}"
+    ],
+    "description": "🚀 Quick memory bank activation"
+  },
+
+  "Memory Quick Update": {
+    "prefix": "mbu",
+    "body": [
+      "MEMORY_COMPLETED ${1:task completed}",
+      "MEMORY_WORKING ${2:current task}",
+      "",
+      "${3:What should I do next?}"
+    ],
+    "description": "🔄 Quick memory bank update"
+  }
+}

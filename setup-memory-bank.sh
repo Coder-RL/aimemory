@@ -121,22 +121,22 @@ print_status "Created VS Code workspace settings"
 cat > .vscode/keybindings.json << 'EOF'
 [
   {
-    "key": "ctrl+shift+m",
+    "key": "cmd+shift+m",
     "command": "aimemory.openWebview",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+i", 
+    "key": "cmd+shift+i",
     "command": "aimemory.insertContext",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+u",
-    "command": "aimemory.updateActiveContext", 
+    "key": "cmd+shift+u",
+    "command": "aimemory.updateActiveContext",
     "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+shift+p",
+    "key": "cmd+shift+j",
     "command": "aimemory.updateProgress",
     "when": "editorTextFocus"
   }

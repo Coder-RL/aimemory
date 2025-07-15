@@ -16,7 +16,7 @@
   "activationEvents": [
     "*"
   ],
-  "main": "./dist/extension.js",
+  "main": "./extension-simple.js",
   "contributes": {
     "commands": [
       {
